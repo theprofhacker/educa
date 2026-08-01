@@ -1,6 +1,8 @@
-# @theprocracker — Top X Videos
+# @theprocracker — Featured Videos
 
-A modern, single-page showcase of your top X (Twitter) video posts. Built with HTML, Tailwind CSS (CDN), and vanilla JavaScript. Dark theme aligned with X’s aesthetic (`#000000` backgrounds, crisp white type).
+A professional single-page showcase of top X (Twitter) video posts from **@theprocracker**. Built with HTML, Tailwind CSS (CDN), and vanilla JavaScript.
+
+**Live site:** https://theprofhacker.github.io/educa/
 
 ## Quick start
 
