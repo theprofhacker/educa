@@ -1,21 +1,25 @@
 # Session notes — save point
 
-**Saved:** 2026-07-26  
+**Saved:** 2026-08-01  
 **Project path:** `/home/thehacker/educa`  
 **GitHub:** https://github.com/theprofhacker/educa  
-**GitHub account used:** `theprofhacker`  
-**Local branch:** `main` (tracking `origin/main`)
+**Live site:** https://theprofhacker.github.io/educa/  
+**GitHub account:** `theprofhacker`  
+**Local branch:** `main` (tracking `origin/main`)  
+**HEAD:** `c3f1105` — Remove Approach / Philosophy section from the site  
+**Working tree:** clean (all changes pushed)
 
 ---
 
 ## What this project is
 
-A single-page **X (Twitter) video showcase** for **@theprocracker**:
+Editorial **portfolio / video showcase** for **The Hacker (@theprocracker)** on X:
 
-- HTML + Tailwind CSS (CDN) + vanilla JavaScript  
-- Dark theme (pitch black `#000000`)  
-- Profile header, video grid with original X thumbnails, sticky nav, footer  
-- Video data lives in `js/videos.js` (easy to edit)
+- Static site: HTML + Tailwind (CDN) + vanilla JS  
+- Dark ink palette (`#070708`) with gold accent (`#c8a96b`)  
+- Fonts: **Instrument Serif** (display) + **Inter** (UI)  
+- Video data in `js/videos.js`  
+- Deployed via **GitHub Pages** (`main` branch, root `/`)
 
 ---
 
@@ -23,19 +27,19 @@ A single-page **X (Twitter) video showcase** for **@theprocracker**:
 
 ```
 educa/
-├── index.html          # Page layout, Tailwind config, header/nav/footer
-├── styles.css          # Scrollbar, play-button hover, lightbox, nav shadow
+├── index.html          # Layout, Tailwind config, hero / work / contact / footer
+├── styles.css          # Portfolio system (nav, buttons, cards, featured, footer)
 ├── js/
-│   ├── videos.js       # Video array (ids, dates, urls, thumbnails)
-│   └── app.js          # Renders cards, play → X, optional lightbox
+│   ├── videos.js       # Video array (titles, categories, thumbs, URLs)
+│   └── app.js          # Featured card + grid, lightbox, nav scroll
 ├── assets/
-│   └── avatar.jpg      # Profile photo (from Downloads)
-├── README.md           # How to run / add videos
+│   └── avatar.jpg      # Profile photo
+├── README.md           # How to run + live URL
 ├── SESSION-NOTES.md    # This file
 └── .gitignore
 ```
 
-**Preview locally:**
+**Local preview:**
 ```bash
 cd /home/thehacker/educa
 python3 -m http.server 8080
@@ -44,113 +48,114 @@ python3 -m http.server 8080
 
 ---
 
-## Content & copy (final state)
+## Site structure (current)
+
+| Section | Content |
+|---------|---------|
+| **Nav** | TH monogram, Work / About / Contact, Follow CTA |
+| **Hero (#about)** | Title “The Hacker”, @theprocracker, bio: *Growth hacking is a mindset rather than a toolset.* Profile panel (avatar, stats, chips). |
+| **Work (#work)** | `01 — Work` · Featured = first video · grid of remaining (numbered) |
+| **Contact (#contact)** | `02 — Connect` · X + GitHub links |
+| **Footer** | Brand, navigate, presence, legal line |
+
+**Removed this session (intentionally):**
+- Hero tagline “Building in public / Demonstrating craft”
+- Extra bio line about “Selected walkthroughs…”
+- Full **02 — Approach / Philosophy** section
+
+---
+
+## Content & copy
 
 | Item | Value |
 |------|--------|
-| Display name | **The Hacker** (green: `text-green-500`) |
-| Handle | **@theprocracker** (light white: `text-white/80`) in nav, profile, footer |
-| Bio | **Growth hacking is a mindset rather than a toolset** (cyan: `text-cyan-400`) |
-| Section heading | **Popular videos on X** (blue: `text-blue-500`) |
-| Subtitle under heading | **Created by thehacker.** (yellow: `text-yellow-400`) |
-| Footer tagline | **Top X video posts · Not affiliated with X Corp.** |
-| Video titles | All **empty** (titles hidden on cards) |
-| Avatar | `assets/avatar.jpg` (was `/home/thehacker/Downloads/photo_2026-03-23_13-57-29.jpg`) |
+| Display name | **The Hacker** |
+| Handle | **@theprocracker** |
+| Bio | **Growth hacking is a mindset rather than a toolset.** |
+| Section work | **Featured videos** |
+| GitHub link | https://github.com/theprofhacker |
+| X link | https://x.com/theprocracker |
+| Avatar | `assets/avatar.jpg` |
 
 ---
 
-## Videos (6 real X posts + original thumbnails)
+## Videos (6 posts in `js/videos.js`)
 
-All in `js/videos.js`, linked to real posts:
+First item = large featured card. Thumbs use `?format=jpg&name=orig` (native resolution).  
+`referrerpolicy="no-referrer"` on images so X CDN loads reliably.
 
-1. Jul 24, 2026 — status `2080601033521111043` (SkyForce)  
-2. Jul 23, 2026 — status `2080260704502768125` (Recons 2.0)  
-3. Jul 21, 2026 — status `2079649397525422144`  
-4. Jul 21, 2026 — status `2079648464364081248` (Viking)  
-5. Jul 21, 2026 — status `2079523354076234205` (BashFire)  
-6. Jul 20, 2026 — status `2079159612029431831` (InstaRecon)
+| # | Date | Title | Category | Status ID |
+|---|------|-------|----------|-----------|
+| Featured | Aug 1, 2026 | Switch Between Themes — Grok Build | Workflow | `2083674380518006837` |
+| 02 | Jul 31, 2026 | InstaBrute v2.0 — Kali Linux | Tooling | `2083313276893401256` |
+| 03 | Jul 31, 2026 | BruteForce Snapchat Password | Demo | `2083157793415016916` |
+| 04 | Jul 30, 2026 | MailRecon 2.0 — Kali Linux 2026.2 | Tooling | `2082796572304113976` |
+| 05 | Jul 29, 2026 | NetUnix 5.0 — Update & Upgrade Tool | Systems | `2082460139475378200` |
+| 06 | Jul 29, 2026 | Monitoring System Tools in Kali Linux | Systems | `2082429799981514833` |
 
-Thumbnails use X `amplify_video_thumb` poster URLs.  
-Play / “Watch on X” open the post URL (no `embedHtml` set yet).
-
----
-
-## Theme decisions during this session
-
-- Started dark (X-style black).  
-- Switched to **white** twice, then **reverted to black** both times.  
-- **Final theme: dark / black** (`bg-x-black`, dark cards `#16181c`).  
-- Accent colors above were kept through theme flips.
+Optional fields: `category`, `summary` (featured), `embedHtml` (lightbox).
 
 ---
 
-## Conversation timeline (what we did)
+## Design decisions
 
-1. Built the full SPA (header, grid, JS data array, sticky nav, footer).  
-2. Bio → “Growth hacking is a mindset rather than a toolset”.  
-3. Headings: Top videos → Popular Videos on X → Watch popular… → **Popular videos on X**.  
-4. Avatar: TP placeholder → user photo in `assets/avatar.jpg`.  
-5. Cleared all six video **titles** (cards stay; text removed).  
-6. Footer / subtitle copy tweaks.  
-7. Wired 6 real videos + original X thumbnails.  
-8. Color tweaks: name green, handle light white, bio cyan, heading blue, credit yellow.  
-9. Background white ↔ black toggles; ended on black.  
-10. Created GitHub repo and pushed as **theprofhacker/educa**.
+- Editorial portfolio (not a basic X clone grid)  
+- Gold accent instead of multi-color labels  
+- White primary buttons; ghost secondary  
+- Featured work is a wide split card on desktop  
+- No multi-color name/bio (green/cyan/yellow removed earlier)
 
 ---
 
-## Git status at save
+## Git history (recent)
 
-- Commits on `main` (at least):
-  - Initial commit: X video showcase  
-  - Add `.gitignore`  
-- Pushed to: `https://github.com/theprofhacker/educa.git`  
-- Working tree was clean after push.
-
-**Note:** If you edit files after this note was written, run:
-```bash
-cd /home/thehacker/educa
-git status
-git add -A && git commit -m "Your message"
-git push
+```
+c3f1105 Remove Approach / Philosophy section from the site
+0a6e978 Trim hero bio to the core tagline
+176af48 Simplify hero headline to name and handle
+80d5acb Elevate site to an editorial portfolio layout
+ddd9a5b Document live GitHub Pages URL in README
+ecde289 Redesign site as a professional creator portfolio
+1122028 Use full original X video poster thumbnails
+cd6b290 Update video showcase with latest @theprocracker posts
 ```
 
----
-
-## GitHub CLI notes
-
-- `gh` installed for the user at: `~/.local/bin/gh`  
-- Authenticated as: **theprofhacker**  
-- Device-code login URL (for future re-auth): https://github.com/login/device  
-- Protocol: HTTPS  
-
-```bash
-export PATH="$HOME/.local/bin:$PATH"
-gh auth status
-```
+**Remote:** https://github.com/theprofhacker/educa.git  
+**Pages:** already enabled · https://theprofhacker.github.io/educa/
 
 ---
 
 ## How to resume later
 
-1. Open project: `cd /home/thehacker/educa`  
+1. `cd /home/thehacker/educa`  
 2. Read this file + `README.md`  
-3. Edit videos in `js/videos.js`  
-4. Tweak UI/copy in `index.html`  
-5. Push updates:
+3. Edit videos: `js/videos.js` (first entry = featured)  
+4. Tweak UI/copy: `index.html` + `styles.css`  
+5. Logic/cards: `js/app.js`  
+6. Push:
    ```bash
    export PATH="$HOME/.local/bin:$PATH"
-   git add -A && git commit -m "Update site" && git push
+   git add -A && git commit -m "Your message" && git push
    ```
+7. Live site auto-updates from `main` via GitHub Pages (~1–2 min)
 
-### Optional next steps (not done yet)
+### Optional next steps
 
-- [ ] Add titles back for some videos  
-- [ ] Paste official X `embedHtml` for in-page lightbox playback  
-- [ ] Deploy (GitHub Pages, Netlify, etc.)  
-- [ ] Update GitHub profile links if handle should be `theprocracker` vs `theprofhacker`  
-- [ ] Commit this `SESSION-NOTES.md` if you want it on GitHub too  
+- [ ] Refresh video list from @theprocracker again  
+- [ ] Add official X `embedHtml` for in-page lightbox  
+- [ ] Custom domain for Pages  
+- [ ] Open Graph image / favicon  
+- [ ] More summaries on non-featured cards  
 
 ---
 
-*End of saved conversation / session handoff.*
+## GitHub CLI
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+gh auth status   # account: theprofhacker
+```
+
+---
+
+*End of session handoff — 2026-08-01.*
