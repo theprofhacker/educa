@@ -25,52 +25,52 @@
 
 const videos = [
   {
-    id: '2080601033521111043',
+    id: '2083674380518006837',
     title: '',
-    date: 'Jul 24, 2026',
-    url: 'https://x.com/theprocracker/status/2080601033521111043',
+    date: 'Aug 1, 2026',
+    url: 'https://x.com/theprocracker/status/2083674380518006837',
     thumbnail:
-      'https://pbs.twimg.com/amplify_video_thumb/2080600936192376832/img/_thm_Lawv1UHHLj-.jpg',
+      'https://pbs.twimg.com/amplify_video_thumb/2083674288549474304/img/FA9jtXiCF7ycZBDl.jpg',
   },
   {
-    id: '2080260704502768125',
+    id: '2083313276893401256',
     title: '',
-    date: 'Jul 23, 2026',
-    url: 'https://x.com/theprocracker/status/2080260704502768125',
+    date: 'Jul 31, 2026',
+    url: 'https://x.com/theprocracker/status/2083313276893401256',
     thumbnail:
-      'https://pbs.twimg.com/amplify_video_thumb/2080260609153634304/img/dXUj6Y7i2MNPHwJ7.jpg',
+      'https://pbs.twimg.com/amplify_video_thumb/2083313110429978625/img/SsGKRRttiMZf2YuM.jpg',
   },
   {
-    id: '2079649397525422144',
+    id: '2083157793415016916',
     title: '',
-    date: 'Jul 21, 2026',
-    url: 'https://x.com/theprocracker/status/2079649397525422144',
+    date: 'Jul 31, 2026',
+    url: 'https://x.com/theprocracker/status/2083157793415016916',
     thumbnail:
-      'https://pbs.twimg.com/amplify_video_thumb/2079649360837853184/img/eiEhSn5KS5YH1vrV.jpg',
+      'https://pbs.twimg.com/amplify_video_thumb/2083157605183098880/img/z4XzdkTB3H7--Ukp.jpg',
   },
   {
-    id: '2079648464364081248',
+    id: '2082796572304113976',
     title: '',
-    date: 'Jul 21, 2026',
-    url: 'https://x.com/theprocracker/status/2079648464364081248',
+    date: 'Jul 30, 2026',
+    url: 'https://x.com/theprocracker/status/2082796572304113976',
     thumbnail:
-      'https://pbs.twimg.com/amplify_video_thumb/2079648427529670656/img/hKnj9HWh8ByrVB-G.jpg',
+      'https://pbs.twimg.com/amplify_video_thumb/2082796526904958976/img/bUM40xMHU_CLeJcN.jpg',
   },
   {
-    id: '2079523354076234205',
+    id: '2082460139475378200',
     title: '',
-    date: 'Jul 21, 2026',
-    url: 'https://x.com/theprocracker/status/2079523354076234205',
+    date: 'Jul 29, 2026',
+    url: 'https://x.com/theprocracker/status/2082460139475378200',
     thumbnail:
-      'https://pbs.twimg.com/amplify_video_thumb/2079523224103084032/img/vKpAPsQOEhM7wx31.jpg',
+      'https://pbs.twimg.com/amplify_video_thumb/2082460018100592641/img/AZETfIWxz12fS2lf.jpg',
   },
   {
-    id: '2079159612029431831',
+    id: '2082429799981514833',
     title: '',
-    date: 'Jul 20, 2026',
-    url: 'https://x.com/theprocracker/status/2079159612029431831',
+    date: 'Jul 29, 2026',
+    url: 'https://x.com/theprocracker/status/2082429799981514833',
     thumbnail:
-      'https://pbs.twimg.com/amplify_video_thumb/2079159188551270400/img/WLQaqskyiUvV8sBA.jpg',
+      'https://pbs.twimg.com/amplify_video_thumb/2082429544187793408/img/-WkxmULO1C40BdMY.jpg',
   },
 ];
 
