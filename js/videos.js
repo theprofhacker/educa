@@ -26,7 +26,7 @@
 const videos = [
   {
     id: '2083674380518006837',
-    title: '',
+    title: 'Switch Between Themes — Grok Build',
     date: 'Aug 1, 2026',
     url: 'https://x.com/theprocracker/status/2083674380518006837',
     thumbnail:
@@ -34,7 +34,7 @@ const videos = [
   },
   {
     id: '2083313276893401256',
-    title: '',
+    title: 'InstaBrute v2.0 — Kali Linux',
     date: 'Jul 31, 2026',
     url: 'https://x.com/theprocracker/status/2083313276893401256',
     thumbnail:
@@ -42,7 +42,7 @@ const videos = [
   },
   {
     id: '2083157793415016916',
-    title: '',
+    title: 'BruteForce Snapchat Password',
     date: 'Jul 31, 2026',
     url: 'https://x.com/theprocracker/status/2083157793415016916',
     thumbnail:
@@ -50,7 +50,7 @@ const videos = [
   },
   {
     id: '2082796572304113976',
-    title: '',
+    title: 'MailRecon 2.0 — Kali Linux 2026.2',
     date: 'Jul 30, 2026',
     url: 'https://x.com/theprocracker/status/2082796572304113976',
     thumbnail:
@@ -58,7 +58,7 @@ const videos = [
   },
   {
     id: '2082460139475378200',
-    title: '',
+    title: 'NetUnix 5.0 — Update & Upgrade Tool',
     date: 'Jul 29, 2026',
     url: 'https://x.com/theprocracker/status/2082460139475378200',
     thumbnail:
@@ -66,7 +66,7 @@ const videos = [
   },
   {
     id: '2082429799981514833',
-    title: '',
+    title: 'Monitoring System Tools in Kali Linux',
     date: 'Jul 29, 2026',
     url: 'https://x.com/theprocracker/status/2082429799981514833',
     thumbnail:

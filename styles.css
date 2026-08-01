@@ -1,46 +1,100 @@
-/* Minimal custom styles — Tailwind handles most of the UI */
+/* Professional refinements — Tailwind handles layout utilities */
 
 html {
   scroll-behavior: smooth;
 }
 
-/* Subtle scrollbar for dark theme */
+body {
+  background-color: #050505;
+  color: #f4f4f5;
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #000000;
+  background: #050505;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2f3336;
-  border-radius: 4px;
+  background: #27272a;
+  border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #536471;
+  background: #3f3f46;
 }
 
-/* Video card media area */
+/* Hero ambient glow */
+.hero-glow {
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 20%, rgba(29, 155, 240, 0.14), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 85% 60%, rgba(255, 255, 255, 0.04), transparent 50%),
+    linear-gradient(180deg, #0a0a0c 0%, #050505 100%);
+}
+
+/* Video card media fallback */
 .video-thumb {
   background:
-    radial-gradient(ellipse at 30% 20%, rgba(29, 155, 240, 0.12), transparent 50%),
-    radial-gradient(ellipse at 70% 80%, rgba(139, 92, 246, 0.1), transparent 45%),
-    linear-gradient(160deg, #16181c 0%, #0a0a0a 100%);
+    radial-gradient(ellipse at 30% 20%, rgba(29, 155, 240, 0.1), transparent 55%),
+    linear-gradient(160deg, #18181b 0%, #09090b 100%);
 }
 
-/* Play button pulse on hover (card-level) */
+/* Card hover polish */
+.video-card {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.video-card:hover {
+  transform: translateY(-2px);
+}
+
 .video-card:hover .play-btn {
-  transform: scale(1.08);
-  background-color: rgba(255, 255, 255, 0.95);
-  color: #000;
+  transform: scale(1.06);
+  background-color: #fff;
+  color: #050505;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 .video-card:hover .play-ring {
   opacity: 0;
-  transform: scale(1.35);
+  transform: scale(1.4);
+}
+
+.video-card:hover .thumb-img {
+  transform: scale(1.04);
+}
+
+.video-card:hover .thumb-overlay {
+  opacity: 1;
+}
+
+.play-btn,
+.play-ring,
+.thumb-img,
+.thumb-overlay {
+  transition: all 0.3s ease;
+}
+
+.thumb-overlay {
+  opacity: 0.85;
+}
+
+/* Featured card (first item on large screens) */
+@media (min-width: 1024px) {
+  .video-card.is-featured {
+    grid-column: span 2;
+  }
+
+  .video-card.is-featured .video-thumb {
+    min-height: 0;
+  }
 }
 
 /* Embed iframes fill the lightbox container */
@@ -51,14 +105,20 @@ html {
   display: block;
 }
 
-/* Focus visible for keyboard users */
+/* Focus rings */
 a:focus-visible,
 button:focus-visible {
   outline: 2px solid #1d9bf0;
   outline-offset: 2px;
 }
 
-/* Nav shadow when scrolled (toggled by JS) */
+/* Nav elevation when scrolled */
 #navbar.is-scrolled {
-  box-shadow: 0 1px 0 0 #2f3336, 0 8px 24px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.06), 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+/* Selection */
+::selection {
+  background: rgba(29, 155, 240, 0.35);
+  color: #fff;
 }

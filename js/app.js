@@ -29,19 +29,31 @@
   }
 
   function formatCount(n) {
-    return n === 1 ? '1' : String(n);
+    return String(n);
+  }
+
+  function isoDateHint(displayDate) {
+    // Best-effort parse for "Mon D, YYYY" → datetime attr (empty if unknown)
+    if (!displayDate) return '';
+    const parsed = Date.parse(displayDate);
+    if (Number.isNaN(parsed)) return '';
+    return new Date(parsed).toISOString().slice(0, 10);
   }
 
   /* ---------- card template ---------- */
 
-  function createCard(video) {
+  function createCard(video, index) {
     const hasEmbed = Boolean(video.embedHtml && String(video.embedHtml).trim());
     const hasTitle = Boolean(video.title && String(video.title).trim());
+    const isFeatured = index === 0;
+    const datetime = isoDateHint(video.date);
+    const label = hasTitle ? video.title : 'Featured video';
+
     const thumbHtml = video.thumbnail
       ? `<img
           src="${escapeHtml(video.thumbnail)}"
-          alt=""
-          class="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+          alt="${escapeHtml(label)}"
+          class="thumb-img absolute inset-0 h-full w-full object-cover"
           loading="lazy"
           decoding="async"
           referrerpolicy="no-referrer"
@@ -50,23 +62,39 @@
 
     const article = document.createElement('article');
     article.className =
-      'video-card group flex flex-col overflow-hidden rounded-2xl bg-x-card shadow-card transition duration-300 hover:shadow-card-hover';
+      'video-card group flex flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-x-card shadow-card hover:shadow-card-hover' +
+      (isFeatured ? ' is-featured' : '');
     article.setAttribute('role', 'listitem');
     article.dataset.id = video.id || '';
 
     article.innerHTML = `
-      <div class="relative aspect-video overflow-hidden video-thumb bg-x-dark">
+      <div class="relative aspect-video overflow-hidden video-thumb">
         ${thumbHtml}
-        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" aria-hidden="true"></div>
+        <div class="thumb-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" aria-hidden="true"></div>
+
+        ${
+          isFeatured
+            ? '<span class="absolute left-3 top-3 rounded-full border border-white/10 bg-black/55 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-md">Latest</span>'
+            : ''
+        }
+
+        ${
+          video.date
+            ? `<time class="absolute right-3 top-3 rounded-full border border-white/10 bg-black/55 px-2.5 py-1 text-[11px] font-medium text-zinc-200 backdrop-blur-md" ${
+                datetime ? `datetime="${datetime}"` : ''
+              }>${escapeHtml(video.date)}</time>`
+            : ''
+        }
+
         <button
           type="button"
           class="play-trigger absolute inset-0 flex items-center justify-center focus:outline-none"
           data-action="play"
           aria-label="${hasTitle ? 'Play: ' + escapeHtml(video.title) : 'Play video'}"
         >
-          <span class="play-ring absolute h-16 w-16 rounded-full border-2 border-white/40 transition duration-300" aria-hidden="true"></span>
+          <span class="play-ring absolute h-[4.25rem] w-[4.25rem] rounded-full border border-white/30" aria-hidden="true"></span>
           <span
-            class="play-btn relative flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-x-black shadow-lg transition duration-300"
+            class="play-btn relative flex h-14 w-14 items-center justify-center rounded-full bg-white/95 text-x-black shadow-lg"
             aria-hidden="true"
           >
             <svg class="ml-0.5 h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
@@ -74,31 +102,33 @@
             </svg>
           </span>
         </button>
+
         ${
           hasEmbed
-            ? '<span class="absolute left-3 top-3 rounded-md bg-black/60 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white backdrop-blur-sm">Embed</span>'
+            ? '<span class="absolute bottom-3 left-3 rounded-md bg-x-blue/90 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">Embed</span>'
             : ''
         }
       </div>
 
-      <div class="flex flex-1 flex-col p-4 sm:p-5">
+      <div class="flex flex-1 flex-col gap-3 p-4 sm:p-5">
         ${
           hasTitle
-            ? `<h3 class="line-clamp-2 text-base font-bold leading-snug text-white">${escapeHtml(video.title)}</h3>`
-            : ''
+            ? `<h3 class="line-clamp-2 text-[0.95rem] font-semibold leading-snug tracking-tight text-white sm:text-base">${escapeHtml(
+                video.title
+              )}</h3>`
+            : `<h3 class="text-[0.95rem] font-semibold leading-snug tracking-tight text-zinc-400">Untitled video</h3>`
         }
-        <time class="${hasTitle ? 'mt-2' : ''} text-sm text-x-muted" datetime="">
-          ${escapeHtml(video.date)}
-        </time>
-        <div class="mt-4 flex flex-1 items-end">
+
+        <div class="mt-auto flex items-center justify-between gap-3 pt-1">
+          <span class="text-xs text-x-faint">Watch on X</span>
           <a
             href="${escapeHtml(video.url)}"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex w-full items-center justify-center gap-2 rounded-full border border-x-border bg-transparent px-4 py-2.5 text-sm font-bold text-white transition hover:bg-x-hover"
+            class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-xs font-semibold text-white transition hover:border-white/20 hover:bg-white/[0.07]"
           >
-            Watch on X
-            <svg class="h-3.5 w-3.5 text-x-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            Open
+            <svg class="h-3 w-3 text-x-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
           </a>
@@ -164,16 +194,16 @@
 
     if (!videos.length) {
       emptyState.classList.remove('hidden');
-      videoCount.textContent = '0';
+      if (videoCount) videoCount.textContent = '0';
       return;
     }
 
     emptyState.classList.add('hidden');
-    videoCount.textContent = formatCount(videos.length);
+    if (videoCount) videoCount.textContent = formatCount(videos.length);
 
     const fragment = document.createDocumentFragment();
-    videos.forEach((video) => {
-      fragment.appendChild(createCard(video));
+    videos.forEach((video, index) => {
+      fragment.appendChild(createCard(video, index));
     });
     grid.appendChild(fragment);
   }
