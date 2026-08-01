@@ -44,6 +44,7 @@
           class="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
           loading="lazy"
           decoding="async"
+          referrerpolicy="no-referrer"
         />`
       : '';
 

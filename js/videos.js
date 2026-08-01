@@ -30,7 +30,7 @@ const videos = [
     date: 'Aug 1, 2026',
     url: 'https://x.com/theprocracker/status/2083674380518006837',
     thumbnail:
-      'https://pbs.twimg.com/amplify_video_thumb/2083674288549474304/img/FA9jtXiCF7ycZBDl.jpg',
+      'https://pbs.twimg.com/amplify_video_thumb/2083674288549474304/img/FA9jtXiCF7ycZBDl.jpg?format=jpg&name=orig',
   },
   {
     id: '2083313276893401256',
@@ -38,7 +38,7 @@ const videos = [
     date: 'Jul 31, 2026',
     url: 'https://x.com/theprocracker/status/2083313276893401256',
     thumbnail:
-      'https://pbs.twimg.com/amplify_video_thumb/2083313110429978625/img/SsGKRRttiMZf2YuM.jpg',
+      'https://pbs.twimg.com/amplify_video_thumb/2083313110429978625/img/SsGKRRttiMZf2YuM.jpg?format=jpg&name=orig',
   },
   {
     id: '2083157793415016916',
@@ -46,7 +46,7 @@ const videos = [
     date: 'Jul 31, 2026',
     url: 'https://x.com/theprocracker/status/2083157793415016916',
     thumbnail:
-      'https://pbs.twimg.com/amplify_video_thumb/2083157605183098880/img/z4XzdkTB3H7--Ukp.jpg',
+      'https://pbs.twimg.com/amplify_video_thumb/2083157605183098880/img/z4XzdkTB3H7--Ukp.jpg?format=jpg&name=orig',
   },
   {
     id: '2082796572304113976',
@@ -54,7 +54,7 @@ const videos = [
     date: 'Jul 30, 2026',
     url: 'https://x.com/theprocracker/status/2082796572304113976',
     thumbnail:
-      'https://pbs.twimg.com/amplify_video_thumb/2082796526904958976/img/bUM40xMHU_CLeJcN.jpg',
+      'https://pbs.twimg.com/amplify_video_thumb/2082796526904958976/img/bUM40xMHU_CLeJcN.jpg?format=jpg&name=orig',
   },
   {
     id: '2082460139475378200',
@@ -62,7 +62,7 @@ const videos = [
     date: 'Jul 29, 2026',
     url: 'https://x.com/theprocracker/status/2082460139475378200',
     thumbnail:
-      'https://pbs.twimg.com/amplify_video_thumb/2082460018100592641/img/AZETfIWxz12fS2lf.jpg',
+      'https://pbs.twimg.com/amplify_video_thumb/2082460018100592641/img/AZETfIWxz12fS2lf.jpg?format=jpg&name=orig',
   },
   {
     id: '2082429799981514833',
@@ -70,7 +70,7 @@ const videos = [
     date: 'Jul 29, 2026',
     url: 'https://x.com/theprocracker/status/2082429799981514833',
     thumbnail:
-      'https://pbs.twimg.com/amplify_video_thumb/2082429544187793408/img/-WkxmULO1C40BdMY.jpg',
+      'https://pbs.twimg.com/amplify_video_thumb/2082429544187793408/img/-WkxmULO1C40BdMY.jpg?format=jpg&name=orig',
   },
 ];
 
