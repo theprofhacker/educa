@@ -1,13 +1,33 @@
-# Session notes — save point
+# Session notes — full save (do not lose)
 
-**Saved:** 2026-08-01  
-**Project path:** `/home/thehacker/educa`  
-**GitHub:** https://github.com/theprofhacker/educa  
-**Live site:** https://theprofhacker.github.io/educa/  
-**GitHub account:** `theprofhacker`  
-**Local branch:** `main` (tracking `origin/main`)  
-**HEAD:** `c3f1105` — Remove Approach / Philosophy section from the site  
-**Working tree:** clean (all changes pushed)
+**Last saved:** 2026-08-05  
+**Status:** All previous website work is **kept**, **committed**, and **pushed**.  
+**Working tree:** clean · local `main` = `origin/main`
+
+| | |
+|--|--|
+| **Project path** | `/home/thehacker/educa` |
+| **GitHub** | https://github.com/theprofhacker/educa |
+| **Live site** | https://theprofhacker.github.io/educa/ |
+| **GitHub account** | `theprofhacker` |
+| **X handle** | `@theprocracker` |
+| **HEAD** | `8bb21f3` — Update session notes for handoff (2026-08-01) |
+
+---
+
+## Guarantee for next session
+
+Nothing from earlier sessions was discarded. This save **preserves**:
+
+- Full editorial portfolio layout (nav, hero, work, contact, footer)
+- Dark ink + gold accent design system
+- Avatar (`assets/avatar.jpg`)
+- All 6 videos with original X thumbnails, titles, categories
+- Featured-first video rendering
+- GitHub Pages deploy from `main`
+- Full git history (see below)
+
+When you return, open this file and continue. Do **not** rebuild from scratch unless asked.
 
 ---
 
@@ -35,7 +55,7 @@ educa/
 ├── assets/
 │   └── avatar.jpg      # Profile photo
 ├── README.md           # How to run + live URL
-├── SESSION-NOTES.md    # This file
+├── SESSION-NOTES.md    # This handoff file
 └── .gitignore
 ```
 
@@ -58,10 +78,10 @@ python3 -m http.server 8080
 | **Contact (#contact)** | `02 — Connect` · X + GitHub links |
 | **Footer** | Brand, navigate, presence, legal line |
 
-**Removed this session (intentionally):**
+**Intentionally removed earlier (keep removed unless asked):**
 - Hero tagline “Building in public / Demonstrating craft”
 - Extra bio line about “Selected walkthroughs…”
-- Full **02 — Approach / Philosophy** section
+- Full **Approach / Philosophy** section
 
 ---
 
@@ -97,19 +117,36 @@ Optional fields: `category`, `summary` (featured), `embedHtml` (lightbox).
 
 ---
 
-## Design decisions
+## Design decisions (keep)
 
 - Editorial portfolio (not a basic X clone grid)  
 - Gold accent instead of multi-color labels  
 - White primary buttons; ghost secondary  
 - Featured work is a wide split card on desktop  
-- No multi-color name/bio (green/cyan/yellow removed earlier)
+- No multi-color name/bio (green/cyan/yellow removed in redesign)
 
 ---
 
-## Git history (recent)
+## Evolution of the site (conversation history summary)
+
+1. Built dark X-style SPA (grid cards, sticky nav, footer)  
+2. Bio, titles, avatar, colors iterated  
+3. Real X videos + original thumbnails  
+4. GitHub repo created & pushed: `theprofhacker/educa`  
+5. Redesign → professional creator portfolio  
+6. Full original X poster thumbnails  
+7. Elevated to editorial portfolio (Instrument Serif + gold)  
+8. GitHub Pages live URL documented  
+9. Hero simplified (name + handle; core bio only)  
+10. Approach / Philosophy section removed  
+11. Session notes saved for handoff  
+
+---
+
+## Git history (full project)
 
 ```
+8bb21f3 Update session notes for handoff (2026-08-01)
 c3f1105 Remove Approach / Philosophy section from the site
 0a6e978 Trim hero bio to the core tagline
 176af48 Simplify hero headline to name and handle
@@ -118,17 +155,20 @@ ddd9a5b Document live GitHub Pages URL in README
 ecde289 Redesign site as a professional creator portfolio
 1122028 Use full original X video poster thumbnails
 cd6b290 Update video showcase with latest @theprocracker posts
+eb0453b Add session notes so work can resume later
+469afe8 Add .gitignore
+6ce34bc Initial commit: X video showcase for @theprocracker
 ```
 
 **Remote:** https://github.com/theprofhacker/educa.git  
-**Pages:** already enabled · https://theprofhacker.github.io/educa/
+**Pages:** https://theprofhacker.github.io/educa/
 
 ---
 
 ## How to resume later
 
 1. `cd /home/thehacker/educa`  
-2. Read this file + `README.md`  
+2. Read **this file** + `README.md`  
 3. Edit videos: `js/videos.js` (first entry = featured)  
 4. Tweak UI/copy: `index.html` + `styles.css`  
 5. Logic/cards: `js/app.js`  
@@ -139,9 +179,9 @@ cd6b290 Update video showcase with latest @theprocracker posts
    ```
 7. Live site auto-updates from `main` via GitHub Pages (~1–2 min)
 
-### Optional next steps
+### Optional next steps (not started)
 
-- [ ] Refresh video list from @theprocracker again  
+- [ ] Refresh video list from @theprocracker  
 - [ ] Add official X `embedHtml` for in-page lightbox  
 - [ ] Custom domain for Pages  
 - [ ] Open Graph image / favicon  
@@ -158,4 +198,4 @@ gh auth status   # account: theprofhacker
 
 ---
 
-*End of session handoff — 2026-08-01.*
+*Full save complete — 2026-08-05. All previous website changes kept on disk and on GitHub.*
