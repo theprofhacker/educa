@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Hacker — @theprocracker</title>
   <meta name="description" content="Official showcase of featured demos and technical walkthroughs from The Hacker (@theprocracker) on X." />
-  <meta name="theme-color" content="#070708" />
+  <meta name="theme-color" content="#070514" />
   <meta property="og:title" content="The Hacker — Featured Work" />
   <meta property="og:description" content="Selected demos and technical walkthroughs from @theprocracker." />
   <meta property="og:type" content="website" />
@@ -19,12 +19,12 @@
         extend: {
           colors: {
             ink: {
-              950: '#070708',
-              900: '#0c0c0e',
-              850: '#111114',
-              800: '#16161a',
-              700: '#1c1c21',
-              600: '#2a2a32',
+              950: '#070514',
+              900: '#0c0a18',
+              850: '#141026',
+              800: '#1c1633',
+              700: '#261e42',
+              600: '#3a2f5c',
             },
             mist: {
               50: '#fafafa',
@@ -36,9 +36,10 @@
               600: '#52525b',
             },
             accent: {
-              DEFAULT: '#c8a96b',
-              soft: 'rgba(200, 169, 107, 0.14)',
+              DEFAULT: '#c4b5fd',
+              soft: 'rgba(167, 139, 250, 0.16)',
             },
+            aurora: '#5eead4',
           },
           fontFamily: {
             sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
@@ -78,13 +79,17 @@
           href="https://x.com/theprocracker"
           target="_blank"
           rel="noopener noreferrer"
-          class="btn-primary ml-2 sm:ml-3"
+          class="btn-ghost ml-1 hidden sm:inline-flex"
         >
           Follow
-          <svg class="h-3.5 w-3.5 opacity-70" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.36l7.719-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-          </svg>
         </a>
+        <button type="button" id="auth-open" class="btn-primary ml-2 sm:ml-3">
+          Sign in
+        </button>
+        <div id="auth-session" class="auth-session ml-2 hidden" hidden>
+          <span id="auth-user" class="auth-user"></span>
+          <button type="button" id="auth-signout" class="nav-link">Sign out</button>
+        </div>
       </nav>
     </div>
   </header>
@@ -153,8 +158,8 @@
                   </dd>
                 </div>
                 <div>
-                  <dt class="text-[10px] font-medium uppercase tracking-brand text-mist-600">Medium</dt>
-                  <dd class="mt-1.5 text-xl font-semibold tracking-tight text-mist-50">Video</dd>
+                  <dt class="text-[10px] font-medium uppercase tracking-brand text-mist-600">Followers</dt>
+                  <dd id="follower-count" class="mt-1.5 text-xl font-semibold tracking-tight text-aurora" title="Followers on X for @theprocracker">8,541</dd>
                 </div>
                 <div>
                   <dt class="text-[10px] font-medium uppercase tracking-brand text-mist-600">Platform</dt>
@@ -180,10 +185,10 @@
         <div>
           <p class="section-index">01 — Work</p>
           <h2 id="work-heading" class="mt-3 font-display text-3xl tracking-tight text-mist-50 sm:text-4xl">
-            Featured videos
+            Most viewed videos
           </h2>
           <p class="mt-3 max-w-lg text-sm leading-relaxed text-mist-500 sm:text-[15px]">
-            A curated selection of recent posts. Each piece opens the original publication on X.
+            The six highest-view posts from @theprocracker, ranked by views on X. Each card opens the original post.
           </p>
         </div>
         <a
@@ -345,7 +350,64 @@
     </div>
   </div>
 
+  <div
+    id="auth-modal"
+    class="auth-modal fixed inset-0 z-[90] hidden items-center justify-center p-4"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="auth-title"
+    hidden
+  >
+    <button type="button" class="auth-backdrop" id="auth-backdrop" aria-label="Close sign in"></button>
+    <div class="auth-card">
+      <div class="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <p class="section-index">Account</p>
+          <h2 id="auth-title" class="mt-2 font-display text-3xl tracking-tight text-mist-50">Welcome back</h2>
+        </div>
+        <button type="button" id="auth-close" class="auth-close" aria-label="Close">
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="auth-tabs" role="tablist" aria-label="Account">
+        <button type="button" class="auth-tab is-active" id="tab-signin" role="tab" aria-selected="true" aria-controls="signin-form">Sign in</button>
+        <button type="button" class="auth-tab" id="tab-signup" role="tab" aria-selected="false" aria-controls="signup-form">Sign up</button>
+      </div>
+
+      <form id="signin-form" class="auth-form" novalidate>
+        <label class="auth-label" for="signin-identifier">Username or email</label>
+        <input id="signin-identifier" name="identifier" type="text" autocomplete="username" required class="auth-input" placeholder="name or you@email.com" />
+
+        <label class="auth-label" for="signin-password">Password</label>
+        <input id="signin-password" name="password" type="password" autocomplete="current-password" required minlength="8" class="auth-input" placeholder="Your password" />
+
+        <p id="signin-error" class="auth-error" role="alert" hidden></p>
+        <button type="submit" class="btn-primary auth-submit">Sign in</button>
+      </form>
+
+      <form id="signup-form" class="auth-form hidden" novalidate hidden>
+        <label class="auth-label" for="signup-username">Username</label>
+        <input id="signup-username" name="username" type="text" autocomplete="username" required minlength="3" maxlength="20" class="auth-input" placeholder="thehacker" />
+
+        <label class="auth-label" for="signup-email">Email</label>
+        <input id="signup-email" name="email" type="email" autocomplete="email" required class="auth-input" placeholder="you@email.com" />
+
+        <label class="auth-label" for="signup-password">Password</label>
+        <input id="signup-password" name="password" type="password" autocomplete="new-password" required minlength="8" class="auth-input" placeholder="At least 8 characters" />
+
+        <p id="signup-error" class="auth-error" role="alert" hidden></p>
+        <button type="submit" class="btn-primary auth-submit">Create account</button>
+      </form>
+
+      <p class="auth-note">Accounts stay in this browser only. This site is static and does not send your password to a server.</p>
+    </div>
+  </div>
+
   <script src="js/videos.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
 </body>
 </html>

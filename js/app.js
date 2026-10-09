@@ -42,6 +42,12 @@
     return (video.category && String(video.category).trim()) || 'Demo';
   }
 
+  function viewsMarkup(video) {
+    const count = Number(video.views);
+    if (!Number.isFinite(count)) return '';
+    return `<span class="font-medium text-aurora">${escapeHtml(count.toLocaleString('en-US'))} views</span>`;
+  }
+
   function playOverlay(ariaLabel) {
     return `
       <button
@@ -100,7 +106,7 @@
         <div>
           <div class="flex flex-wrap items-center gap-2.5">
             <span class="inline-flex items-center rounded-full border border-accent/25 bg-accent/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-accent">
-              Latest
+              Most viewed
             </span>
             <span class="text-[11px] font-medium uppercase tracking-[0.12em] text-mist-600">${escapeHtml(category)}</span>
           </div>
@@ -114,13 +120,14 @@
           }
         </div>
         <div class="flex flex-wrap items-center justify-between gap-4 border-t border-white/[0.06] pt-5">
-          ${
-            video.date
-              ? `<time class="text-sm text-mist-500" ${datetime ? `datetime="${datetime}"` : ''}>${escapeHtml(
-                  video.date
-                )}</time>`
-              : '<span></span>'
-          }
+          <span class="flex flex-wrap items-center gap-3 text-sm text-mist-500">
+            ${
+              video.date
+                ? `<time ${datetime ? `datetime="${datetime}"` : ''}>${escapeHtml(video.date)}</time>`
+                : ''
+            }
+            ${viewsMarkup(video)}
+          </span>
           <a
             href="${escapeHtml(video.url)}"
             target="_blank"
@@ -163,13 +170,14 @@
           ${escapeHtml(title)}
         </h3>
         <div class="mt-auto flex items-center justify-between gap-3 border-t border-white/[0.06] pt-4">
-          ${
-            video.date
-              ? `<time class="text-xs text-mist-500" ${datetime ? `datetime="${datetime}"` : ''}>${escapeHtml(
-                  video.date
-                )}</time>`
-              : '<span></span>'
-          }
+          <span class="flex min-w-0 flex-col text-xs text-mist-500">
+            ${
+              video.date
+                ? `<time ${datetime ? `datetime="${datetime}"` : ''}>${escapeHtml(video.date)}</time>`
+                : ''
+            }
+            ${viewsMarkup(video)}
+          </span>
           <a
             href="${escapeHtml(video.url)}"
             target="_blank"
