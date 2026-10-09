@@ -100,7 +100,10 @@
       sessionEl.hidden = !signedIn;
       sessionEl.classList.toggle('hidden', !signedIn);
     }
-    if (userEl) userEl.textContent = signedIn ? username : '';
+    if (userEl) {
+      userEl.textContent = signedIn ? username : '';
+      userEl.title = signedIn ? 'Signed in on this browser' : '';
+    }
   }
 
   function validUsername(value) {

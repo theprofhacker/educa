@@ -8,6 +8,10 @@
 
   const featuredSlot = document.getElementById('featured-slot');
   const grid = document.getElementById('video-grid');
+  const latestGrid = document.getElementById('latest-grid');
+  const latestEmpty = document.getElementById('latest-empty');
+  const filtersEl = document.getElementById('filters');
+  const repoRow = document.getElementById('repo-row');
   const emptyState = document.getElementById('empty-state');
   const videoCount = document.getElementById('video-count');
   const yearEl = document.getElementById('year');
@@ -20,6 +24,8 @@
   const lightboxClose = document.getElementById('lightbox-close');
 
   const videos = Array.isArray(window.VIDEOS) ? window.VIDEOS : [];
+  const latest = Array.isArray(window.LATEST) ? window.LATEST : [];
+  let activeFilter = 'All';
 
   function escapeHtml(str) {
     const div = document.createElement('div');
@@ -116,7 +122,7 @@
           ${
             video.summary
               ? `<p class="mt-3 max-w-md text-sm leading-relaxed text-mist-500">${escapeHtml(video.summary)}</p>`
-              : `<p class="mt-3 max-w-md text-sm leading-relaxed text-mist-500">Watch the full walkthrough on the original X post.</p>`
+              : `<p class="mt-3 max-w-md text-sm leading-relaxed text-mist-500">Play it here, or open the original post on X.</p>`
           }
         </div>
         <div class="flex flex-wrap items-center justify-between gap-4 border-t border-white/[0.06] pt-5">
@@ -198,12 +204,11 @@
   }
 
   function handlePlay(video) {
-    const hasEmbed = Boolean(video.embedHtml && String(video.embedHtml).trim());
-    if (hasEmbed) {
+    if (video && video.id) {
       openLightbox(video);
       return;
     }
-    if (video.url) {
+    if (video && video.url) {
       window.open(video.url, '_blank', 'noopener,noreferrer');
     }
   }
@@ -211,7 +216,15 @@
   function openLightbox(video) {
     lightboxTitle.textContent = video.title || 'Video';
     lightboxXLink.href = video.url || 'https://x.com/theprocracker';
-    lightboxContent.innerHTML = video.embedHtml;
+    lightboxContent.replaceChildren();
+    const frame = document.createElement('iframe');
+    frame.src = 'https://platform.twitter.com/embed/Tweet.html?id='
+      + encodeURIComponent(video.id)
+      + '&theme=dark&dnt=true';
+    frame.title = video.title ? 'Post: ' + video.title : 'Post on X';
+    frame.allowFullscreen = true;
+    frame.setAttribute('allow', 'fullscreen; autoplay');
+    lightboxContent.appendChild(frame);
     lightbox.hidden = false;
     lightbox.classList.remove('hidden');
     lightbox.classList.add('flex');
@@ -237,33 +250,89 @@
     if (e.key === 'Escape' && lightbox && !lightbox.hidden) closeLightbox();
   });
 
+  function matches(video) {
+    if (activeFilter === 'All') return true;
+    return categoryLabel(video) === activeFilter;
+  }
+
+  function fillGrid(target, items, startIndex) {
+    if (!target) return;
+    target.innerHTML = '';
+    const fragment = document.createDocumentFragment();
+    items.forEach((video, index) => {
+      fragment.appendChild(createCard(video, startIndex + index));
+    });
+    target.appendChild(fragment);
+  }
+
+  function renderFilters() {
+    if (!filtersEl) return;
+    const names = new Set();
+    videos.concat(latest).forEach((video) => names.add(categoryLabel(video)));
+    const options = ['All'].concat(Array.from(names).sort());
+    filtersEl.replaceChildren();
+    options.forEach((name) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'filter-chip' + (name === activeFilter ? ' is-active' : '');
+      button.textContent = name;
+      button.setAttribute('aria-pressed', name === activeFilter ? 'true' : 'false');
+      button.addEventListener('click', () => {
+        activeFilter = name;
+        render();
+      });
+      filtersEl.appendChild(button);
+    });
+  }
+
+  function renderRepos() {
+    if (!repoRow) return;
+    const repos = Array.isArray(window.REPOS) ? window.REPOS : [];
+    repoRow.replaceChildren();
+    repos.forEach((repo) => {
+      const link = document.createElement('a');
+      link.className = 'repo-card';
+      link.href = repo.url || 'https://github.com/theprofhacker';
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+
+      const name = document.createElement('p');
+      name.className = 'repo-name';
+      name.textContent = repo.name || 'Repository';
+
+      const description = document.createElement('p');
+      description.className = 'repo-desc';
+      description.textContent = repo.description || 'Public repository';
+
+      const meta = document.createElement('p');
+      meta.className = 'repo-meta';
+      meta.textContent = repo.language || 'GitHub';
+
+      link.append(name, description, meta);
+      repoRow.appendChild(link);
+    });
+  }
+
   function render() {
+    renderFilters();
     if (featuredSlot) featuredSlot.innerHTML = '';
     if (grid) grid.innerHTML = '';
 
-    if (!videos.length) {
-      if (emptyState) emptyState.classList.remove('hidden');
-      if (videoCount) videoCount.textContent = '0';
-      return;
-    }
-
-    if (emptyState) emptyState.classList.add('hidden');
+    const shown = videos.filter(matches);
+    const shownLatest = latest.filter(matches);
     if (videoCount) videoCount.textContent = String(videos.length);
 
-    const [featured, ...rest] = videos;
-
-    if (featuredSlot && featured) {
-      featuredSlot.appendChild(createFeatured(featured));
+    if (!shown.length) {
+      if (emptyState) emptyState.classList.remove('hidden');
+    } else if (emptyState) {
+      emptyState.classList.add('hidden');
+      const [featured, ...rest] = shown;
+      if (featuredSlot && featured) featuredSlot.appendChild(createFeatured(featured));
+      fillGrid(grid, rest, 1);
     }
 
-    if (grid) {
-      const fragment = document.createDocumentFragment();
-      rest.forEach((video, index) => {
-        // Number remaining items as 02, 03... (featured is 01 conceptually)
-        fragment.appendChild(createCard(video, index + 1));
-      });
-      grid.appendChild(fragment);
-    }
+    fillGrid(latestGrid, shownLatest, 0);
+    if (latestEmpty) latestEmpty.classList.toggle('hidden', shownLatest.length > 0);
   }
 
   if (yearEl) {
@@ -278,5 +347,6 @@
     onScroll();
   }
 
+  renderRepos();
   render();
 })();
