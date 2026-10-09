@@ -1,8 +1,8 @@
 # Session notes — full save (do not lose)
 
-**Last saved:** 2026-08-05  
-**Status:** All previous website work is **kept**, **committed**, and **pushed**.  
-**Working tree:** clean · local `main` = `origin/main`
+**Last saved:** 2026-10-09  
+**Status:** All previous website work is **kept**. Site code through `7cc4302` is **committed** and **pushed**. This notes commit follows that.  
+**Working tree:** the only untracked path that matters is `.github/workflows/refresh-x.yml` (see below). Do not `git add -A` until `gh` has the `workflow` scope, or the push is rejected.
 
 | | |
 |--|--|
@@ -11,29 +11,67 @@
 | **Live site** | https://theprofhacker.github.io/educa/ |
 | **GitHub account** | `theprofhacker` |
 | **X handle** | `@theprocracker` |
-| **HEAD** | `8bb21f3` — Update session notes for handoff (2026-08-01) |
+| **X followers (snapshot)** | 8,545 on 2026-10-09 |
+| **Telegram** | https://t.me/social2hacks (`@social2hacks`) |
+| **Signal** | https://signal.me/#u/theprocracker.43 (`@theprocracker.43`) |
+| **HEAD before this notes save** | `7cc4302` — Add live shelves, on-page playback, and a share card |
 
 ---
 
 ## Guarantee for next session
 
-Nothing from earlier sessions was discarded. This save **preserves**:
+Nothing from earlier sessions was discarded. The August 2026 layout, copy history, and git history below are still in this file. The **current** site is the October 2026 state in the next section.
 
-- Full editorial portfolio layout (nav, hero, work, contact, footer)
-- Dark ink + gold accent design system
-- Avatar (`assets/avatar.jpg`)
-- All 6 videos with original X thumbnails, titles, categories
-- Featured-first video rendering
-- GitHub Pages deploy from `main`
-- Full git history (see below)
-
-When you return, open this file and continue. Do **not** rebuild from scratch unless asked.
+When you return, open this file and `CONVERSATION-LOG.md`. Do **not** rebuild from scratch unless asked.
 
 ---
 
-## What this project is
+## Current state — 2026-10-09
 
-Editorial **portfolio / video showcase** for **The Hacker (@theprocracker)** on X:
+Static portfolio for **The Hacker (@theprocracker)**. HTML + Tailwind CDN + vanilla JS. GitHub Pages from `main`.
+
+**Look:** deep violet background `#070514`, aurora accent (violet `#7c3aed` into cyan `#22d3ee` / `#5eead4`). Fonts still Instrument Serif + Inter. Avatar: `assets/avatar.jpg`.
+
+**Videos** (`js/videos.js`, generated — do not edit by hand):
+
+- `window.VIDEOS` — six most-viewed posts, first is the featured card
+- `window.LATEST` — six newer posts that are not already in the most-viewed six
+- Play opens an on-page X embed (`platform.twitter.com/embed/Tweet.html`). "Open original on X" stays under the player
+- Filter chips: All, Desktop, Network, OSINT, Video
+- Catalog of seen posts: `data/catalog.json`
+
+**Accounts:** `js/auth.js`. Sign up with username, email, and password. Sign in with username **or** email. Session stays in **this browser only** (`localStorage`). There is no server. Do not put passwords in the repo.
+
+**Connect:** X, Telegram, and Signal, with icons, in the profile panel, the connect row, and the footer.
+
+**GitHub row:** `js/repos.js`. Pins on the profile were empty, so the row shows `educa` and `theprofhacker`. `scripts/refresh_site.py` skips repos whose name or description matches brute-force, stolen-account, or remote-access tools. Do not add those repos to the site.
+
+**Share card:** `assets/favicon.svg` and `assets/og.png` (name, @theprocracker, follower count). Open Graph tags are in `index.html`.
+
+**Refresh:** `python3 scripts/refresh_site.py` rewrites the follower count, both shelves, `js/repos.js`, and the share card. It uses the public FixupX media feed and `api.fxtwitter.com`. No X API key.
+
+**Not on GitHub yet:** `.github/workflows/refresh-x.yml` (Mondays 13:17 UTC, plus manual run). Push was rejected because the `gh` token has `gist`, `read:org`, and `repo` only — not `workflow`. To publish it later:
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+gh auth refresh -s workflow
+cd /home/thehacker/educa
+git add .github/workflows/refresh-x.yml
+git commit -m "Run a weekly refresh of X stats"
+git push
+```
+
+**Left unfinished (user did not pick these):**
+
+- Theme switch (violet vs flat ink)
+- Custom domain
+- Accounts that work on every device (needs a real backend; do not invent one on GitHub Pages)
+
+---
+
+## August 2026 snapshot (kept, no longer the live look)
+
+Editorial **portfolio / video showcase** for **The Hacker (@theprocracker)** on X. The palette below was replaced on 2026-10-09. Do not restore gold-on-ink unless asked.
 
 - Static site: HTML + Tailwind (CDN) + vanilla JS  
 - Dark ink palette (`#070708`) with gold accent (`#c8a96b`)  
@@ -167,25 +205,27 @@ eb0453b Add session notes so work can resume later
 
 ## How to resume later
 
-1. `cd /home/thehacker/educa`  
-2. Read **this file** + `README.md`  
-3. Edit videos: `js/videos.js` (first entry = featured)  
-4. Tweak UI/copy: `index.html` + `styles.css`  
-5. Logic/cards: `js/app.js`  
-6. Push:
+1. `cd /home/thehacker/educa`
+2. Read **this file** (the "Current state" section first) and `CONVERSATION-LOG.md`
+3. Videos come from `python3 scripts/refresh_site.py`, not from hand edits to `js/videos.js`
+4. UI: `index.html`, `styles.css`, `js/app.js`, `js/auth.js`
+5. Do **not** `git add -A` while `.github/workflows/refresh-x.yml` is untracked, unless `gh auth status` shows the `workflow` scope
+6. Otherwise push with:
    ```bash
    export PATH="$HOME/.local/bin:$PATH"
-   git add -A && git commit -m "Your message" && git push
+   git add index.html styles.css js assets data scripts SESSION-NOTES.md CONVERSATION-LOG.md
+   git commit -m "Your message" && git push
    ```
-7. Live site auto-updates from `main` via GitHub Pages (~1–2 min)
+7. Live site updates from `main` via GitHub Pages (~1–2 min)
 
-### Optional next steps (not started)
+### Done since the August list
 
-- [ ] Refresh video list from @theprocracker  
-- [ ] Add official X `embedHtml` for in-page lightbox  
-- [ ] Custom domain for Pages  
-- [ ] Open Graph image / favicon  
-- [ ] More summaries on non-featured cards  
+- [x] Refresh video list from @theprocracker (most viewed + latest)
+- [x] On-page X embed lightbox
+- [x] Open Graph image and favicon
+- [ ] Custom domain
+- [ ] More summaries on non-featured cards
+- [ ] Weekly Action on GitHub (file is local only; token lacks `workflow`)  
 
 ---
 
@@ -198,4 +238,4 @@ gh auth status   # account: theprofhacker
 
 ---
 
-*Full save complete — 2026-08-05. All previous website changes kept on disk and on GitHub.*
+*Full save complete — 2026-10-09. August notes kept. October site work is on `main`. The weekly workflow file is local only.*
